@@ -48,4 +48,4 @@ def extract_zip(zip_file: str, data_dir: str):
 
 
 zipfile = download_zip_to_memory(path.EPOST_ALL_URL)
-extract_zip(zipfile, path.DATA_PATH)
+extract_zip(zipfile, 'data')

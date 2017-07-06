@@ -145,3 +145,5 @@ tags
 # data files
 zipcode/data/*
 
+# database
+db.sqlite

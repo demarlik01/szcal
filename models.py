@@ -8,4 +8,5 @@ class Address(Base):
     id = Column(Integer, primary_key=True)
     zipcode = Column(String(6), nullable=False)
     address = Column(String(255), nullable=False)
+    trimmed_address = Column(String(255), nullable=False)
     add_fee = Column(Integer, nullable=False)

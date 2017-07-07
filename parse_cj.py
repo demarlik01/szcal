@@ -7,12 +7,18 @@ import aiofiles
 
 
 def make_result(line, local):
+    line = list(map(lambda x: x.replace(' ', ''), line))
     if line[12] == '0':
         addr = '{} {} {} {} {}'.format(line[1], line[3], line[5], line[8], line[11])
     else:
         addr = '{} {} {} {} {}-{}'.format(line[1], line[3], line[5], line[8], line[11], line[12])
 
-    return {'zipcode': line[0], 'address': addr, 'add_fee': local['add_fee']}
+    return {
+        'zipcode': line[0],
+        'address': addr,
+        'trimmed_address': addr.replace(' ', ''),
+        'add_fee': local['add_fee']
+    }
 
 
 def scrap_match_data(line, local_list):
@@ -52,12 +58,15 @@ async def parse_jeonnam_zipcode(file_name, local_list):
                 result.append(item)
 
             if line[3] == '신안군':
-                if line[5] == '압해읍' and line[18] in ['가린리', '고이리', '매화리']:
-                    result.append(make_result(line, {'add_fee': 7000}))
-                elif line[5] == '지도읍' and line[18] in ['선도리', '어의리']:
-                    result.append(make_result(line, {'add_fee': 7000}))
-                elif line[5] == '중도면' and line[18] == '병풍리':
-                    result.append(make_result(line, {'add_fee': 7000}))
+                if line[5] == '압해읍':
+                    if line[18] in ['가린리', '고이리', '매화리']:
+                        result.append(make_result(line, {'add_fee': 7000}))
+                elif line[5] == '지도읍':
+                    if line[18] in ['선도리', '어의리']:
+                        result.append(make_result(line, {'add_fee': 7000}))
+                elif line[5] == '중도면':
+                    if line[18] == '병풍리':
+                        result.append(make_result(line, {'add_fee': 7000}))
                 else:
                     result.append(make_result(line, {'add_fee': 7000}))
 
@@ -85,13 +94,13 @@ async def parse_jeju_zipcode(file_name):
         result = list()
         async for line in f:
             line = line.decode('cp949').split('|')
-
-            if line[5] == '우도면':
-                result.append(make_result(line, {'add_fee': 9000}))
-            elif line[5] == '추자면':
-                result.append(make_result(line, {'add_fee': 10000}))
-            else:
-                result.append(make_result(line, {'add_fee': 3000}))
+            if line[1] == '제주특별자치도':
+                if line[5] == '우도면':
+                    result.append(make_result(line, {'add_fee': 9000}))
+                elif line[5] == '추자면':
+                    result.append(make_result(line, {'add_fee': 10000}))
+                else:
+                    result.append(make_result(line, {'add_fee': 3000}))
         return result
 
 
@@ -122,7 +131,3 @@ async def main():
             [Address(**item) for item in result]
         )
         session.commit()
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
-loop.close()

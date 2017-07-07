@@ -18,7 +18,7 @@ def cj_secluded_place():
         result_dict = {
             'zipcode': result.zipcode,
             'address': result.address,
-            'add_fee': result.add_fee,
+            'additional_fee': result.add_fee,
         }
         return jsonify(result_dict)
     else:

@@ -1,6 +1,5 @@
 import requests
 import zipfile
-import path
 import os
 from io import BytesIO
 from functools import reduce
@@ -45,7 +44,3 @@ def extract_zip(zip_file: str, data_dir: str):
             extract_file(zip_file, file_name, data_path)
         except zipfile.BadZipFile:
             print('Bad file {bad_file}'.format(d_file_name))
-
-
-zipfile = download_zip_to_memory(path.EPOST_ALL_URL)
-extract_zip(zipfile, 'data')

@@ -65,7 +65,7 @@ ADD_FEE_JEONAM = [
 ADD_FEE_INCHEON = [
     {'do': '인천광역시', 'sigungu': '강화군', 'eupmyeon': '삼산면', 'add_fee': 4500},
     {'do': '인천광역시', 'sigungu': '강화군', 'eupmyeon': '서도면', 'add_fee': 4500},
-    {'do': '인천광역시', 'dong': '무의동', 'add_fee': 6000}
+    {'do': '인천광역시', 'sigungu': '중구', 'dong': '무의동', 'add_fee': 6000}
 ]
 
 ADD_FEE_JEJU = [

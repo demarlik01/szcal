@@ -33,7 +33,7 @@ def scrap_match_data(line, local_list):
                 item = make_result(line, local)
             elif 'eupmyeon' in local and local['eupmyeon'] == line[5]:
                 item = make_result(line, local)
-        return item
+    return item
 
 
 async def parse_zipcode(file_name, local_list):
